@@ -6,37 +6,6 @@
     To solve Cryptarithmetic Problem,a CSP(Constraint Satisfaction Problem) using Python
 </p>
 <h3>Procedure:</h3>
-<p>
-   Step 1: Start the program.
-
-Step 2: Read three input words from the user —WORD1, WORD2, and RESULT.
-
-Step 3: Combine all letters from the three words and find the unique letters.
-
-a)If there are more than 10 unique letters → stop (since digits 0–9 can only represent 10 unique letters).
-
-Step 4: Generate all possible digit assignments (permutations) for these unique letters.
-
-Step 5: For each permutation:
-
-  a) Create a mapping of each letter to a digit.
-
-  b) Check if any leading letter of the three words is assigned 0 — if yes, skip this permutation.
-
-  c) Convert each word into its numeric equivalent using the current mapping.
-
-  d) Check if WORD1 + WORD2 == RESULT.
-
-Step 6: If a valid mapping is found that satisfies the equation:
-
-  a) Display the numeric values of WORD1, WORD2, and RESULT.
-
-  b) Display the letter-to-digit mapping.
-
-Step 7: If no valid mapping is found after checking all permutations, print “No solution found.”
-
-Step 8: End the program. 
-</p>
 Input and Output
 <br>Input:
 This algorithm will take three words.
@@ -53,13 +22,68 @@ For this case it is like this.
               B A L L                         2 4 5 5
              ---------                       ---------
             G A M E S                       0 4 9 1 6
+Algorithm
+For this problem, we will define a node, which contains a letter and its corresponding values.<br>
+
+isValid(nodeList, count, word1, word2, word3)<br>
+
+Input − A list of nodes, the number of elements in the node list and three words.<br>
+
+Output − True if the sum of the value for word1 and word2 is same as word3 value.<br>
+
+Begin<br>
+   m := 1<br>
+   for each letter i from right to left of word1, do<br>
+      ch := word1[i]<br>
+      for all elements j in the nodeList, do<br>
+         if nodeList[j].letter = ch, then<br>
+            break<br>
+      done<br>
+      val1 := val1 + (m * nodeList[j].value)<br>
+      m := m * 10<br>
+   done<br>
+
+   m := 1<br>
+   for each letter i from right to left of word2, do<br>
+      ch := word2[i]<br>
+      for all elements j in the nodeList, do<br>
+         if nodeList[j].letter = ch, then<br>
+            break<br>
+      done<br>
+
+      val2 := val2 + (m * nodeList[j].value)
+      m := m * 10
+   done<br>
+
+   m := 1<br>
+   for each letter i from right to left of word3, do<br>
+      ch := word3[i]<br>
+      for all elements j in the nodeList, do<br>
+         if nodeList[j].letter = ch, then<br>
+            break<br>
+      done<br>
+
+      val3 := val3 + (m * nodeList[j].value)
+      m := m * 10
+   done<br>
+
+   if val3 = (val1 + val2), then<br>
+      return true<br>
+   return false<br>
+End<br>
+
+<hr>
+<h2>Sample Input and Output:</h2>
+SEND = 9567<br>
+MORE = 1085<br>
+<hr>
+MONEY = 10652<br>
 
 ## PROGRAM
 ```Python
 from itertools import permutations
 
 def solve_cryptarithmetic(word1, word2, result):
- 
     letters = set(word1 + word2 + result)
     if len(letters) > 10:
         print("Too many unique letters (max 10 allowed).")
@@ -82,9 +106,9 @@ def solve_cryptarithmetic(word1, word2, result):
 
     return None
 
-word1 = input("Enter first word: ").upper()
-word2 = input("Enter second word: ").upper()
-result = input("Enter result word: ").upper()
+word1 = "EAT"
+word2 = "THAT"
+result = "APPLE"
 
 solution = solve_cryptarithmetic(word1, word2, result)
 
@@ -97,10 +121,12 @@ if solution:
     print(f"Mapping: {mapping}")
 else:
     print("No solution found.")
+
 ```
 
 ## output
-<img width="826" height="315" alt="image" src="https://github.com/user-attachments/assets/8b55ad99-b9d7-4a8b-a38c-d4cd51e104f2" />
+
+<img width="649" height="220" alt="image" src="https://github.com/user-attachments/assets/acfca0cf-0395-4989-86a9-a9db157d089b" />
 
 
 
@@ -108,3 +134,4 @@ else:
 <hr>
 <h2>Result:</h2>
 <p> Thus a Cryptarithmetic Problem was solved using Python successfully</p>
+
